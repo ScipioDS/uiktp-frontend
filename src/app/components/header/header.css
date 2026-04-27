@@ -1,0 +1,7 @@
+.header-styling{
+  margin-top: 1rem;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  background: #2A7B9B;
+  background: linear-gradient(115deg, var(--main-color) 0%, var(--second-color) 100%);
+}

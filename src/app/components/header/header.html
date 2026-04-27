@@ -1,0 +1,27 @@
+<div class="d-flex flex-row justify-content-between align-items-center header-styling">
+  <div>
+    <img ngSrc="logo.png" alt="AgroFlow logo" width="220" height="60"
+         class="cursor-pointer" />
+  </div>
+
+  <div>
+    @if (user()) {
+      <div class="dropdown">
+        <button class="btn btn-agro-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          {{ user().username }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <button class="dropdown-item text-danger" type="button" (click)="logout()">
+              Logout
+            </button>
+          </li>
+        </ul>
+      </div>
+    } @else {
+      <button type="button" class="btn btn-agro-primary" routerLink="/login">Login</button>
+    }
+  </div>
+</div>
+
+

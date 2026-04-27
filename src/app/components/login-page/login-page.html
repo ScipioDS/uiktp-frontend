@@ -1,0 +1,63 @@
+<div class="container mt-3">
+  <img ngSrc="logo-green.png" alt="AgroFlow logo" width="320" height="100"
+       class="cursor-pointer" routerLink="/explore"/>
+</div>
+<div class="container w-100 mt-5 d-flex flex-wrap">
+  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex flex-column align-items-center pk-border-right">
+    <form [formGroup]="loginForm" class="d-flex flex-column w-75" (keyup.enter)="doLogin()">
+      <div class="h1 mb-3">Login</div>
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username" placeholder="Enter username...">
+        @if (loginForm.get('username')?.hasError('required')) {
+          <mat-error>Required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Enter password...">
+        @if (loginForm.get('password')?.hasError('required')) {
+          <mat-error>Required</mat-error>
+        }
+      </mat-form-field>
+
+      <button type="button" class="shadow-sm mt-1 w-25 align-self-end btn btn-agro-primary"
+              (click)="doLogin()">
+        Login
+      </button>
+
+    </form>
+  </div>
+  <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 d-flex flex-column align-items-center">
+    <form [formGroup]="registerForm" class="d-flex flex-column w-75" (keyup.enter)="doRegister()">
+      <div class="h1 mb-3">Register</div>
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput type="text" formControlName="username" placeholder="Enter username...">
+        @if (loginForm.get('username')?.hasError('required')) {
+          <mat-error>Required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput type="text" formControlName="email" placeholder="Enter email...">
+        @if (loginForm.get('email')?.hasError('required')) {
+          <mat-error>Required</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Enter password...">
+        @if (loginForm.get('password')?.hasError('required')) {
+          <mat-error>Required</mat-error>
+        }
+      </mat-form-field>
+
+      <button type="button" class="shadow-sm mt-1 w-25 align-self-end btn btn-agro-primary"
+              (click)="doRegister()">
+        Register
+      </button>
+
+    </form>
+  </div>
+</div>

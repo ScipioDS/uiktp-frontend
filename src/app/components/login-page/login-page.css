@@ -1,0 +1,5 @@
+@media (min-width: 992px) { /* Bootstrap large (lg) breakpoint */
+  .col-lg-6.pk-border-right {
+    border-right: 2px solid var(--main-color);
+  }
+}
