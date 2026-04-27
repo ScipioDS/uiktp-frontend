@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --main-color: #3f8f5a;
+  --second-color: #275598;
+  --accent-color: #f4efe3;
+  --main-font: 'Arial', sans-serif;
+  --base-padding: 15px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #edffe6;
+}
+.app-container {
+  min-height: 100vh;
+  /*background: linear-gradient(#FFFFFF, lightgreen);*/
+
+}
+
+.btn-agro-primary {
+  background: var(--main-color);
+  color: white;
+}
+
+.btn-agro-primary:hover {
+  background: color-mix(var(--main-color), black 20%);
+  color: white;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
