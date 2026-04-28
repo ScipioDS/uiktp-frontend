@@ -3,6 +3,7 @@ import {LandingPage} from './components/landing-page/landing-page';
 import { LoginPage } from './components/login-page/login-page';
 import { ExplorePage } from './components/explore-page/explore-page';
 import { authGuard } from './guards/auth-guard';
+import { ProfilePage } from './components/profile-page/profile-page';
 
 const titleBase = 'AgroFlow - ';
 
@@ -21,6 +22,12 @@ export const routes: Routes = [
     path: 'explore',
     component: ExplorePage,
     title: titleBase + 'Explore',
+    canActivate: [authGuard],
+  },
+  {
+    path: 'profile/:id',
+    component: ProfilePage,
+    title: titleBase + 'Profile',
     canActivate: [authGuard],
   },
 ];

@@ -1,7 +1,5 @@
-// user.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -12,5 +10,19 @@ export class UserService {
 
   getUserInfo() {
     return this.http.get<any>(`${this.API}/info`);
+  }
+
+  getUserInfoById(userId: string) {
+    return this.http.get<any>(`${this.API}/info/${userId}`);
+  }
+
+  updateUser(payload: {
+    userId: string;
+    username?: string;
+    email?: string;
+    oldPassword?: string;
+    newPassword?: string;
+  }) {
+    return this.http.post<any>(`${this.API}/update`, payload);
   }
 }
