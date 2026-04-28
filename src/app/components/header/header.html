@@ -1,7 +1,7 @@
 <div class="d-flex flex-row justify-content-between align-items-center header-styling">
   <div>
     <img ngSrc="logo.png" alt="AgroFlow logo" width="220" height="60"
-         class="cursor-pointer" />
+         class="cursor-pointer" routerLink="/explore" />
   </div>
 
   <div>
@@ -11,6 +11,11 @@
           {{ user().username }}
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <button class="dropdown-item" type="button" routerLink="/profile/{{ user().id }}">
+              Profile
+            </button>
+          </li>
           <li>
             <button class="dropdown-item text-danger" type="button" (click)="logout()">
               Logout

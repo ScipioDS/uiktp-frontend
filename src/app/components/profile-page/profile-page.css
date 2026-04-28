@@ -1,0 +1,30 @@
+.location-card {
+  background: rgba(255, 255, 255, 0.15);
+  min-height: 70px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: color-mix(var(--main-color), white 40%);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dot.active {
+  background: var(--main-color);
+}
+
+.line-styling {
+  border: 1px solid;
+  border-image: linear-gradient(115deg, var(--main-color) 0%, var(--second-color) 100%) 1;
+}
+
+.icon-styling {
+  height: 35px;
+  width: 35px;
+  font-size: 35px;
+  line-height: 35px;
+  color: var(--main-color);
+}

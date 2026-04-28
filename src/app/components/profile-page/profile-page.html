@@ -1,0 +1,99 @@
+<app-header></app-header>
+
+<div class="d-flex flex-column">
+
+  <div class="card p-4 my-4 shadow d-flex flex-column border-0 rounded-4"
+       style="background: var(--accent-color)">
+    <div class="d-flex align-items-center gap-3">
+      <mat-icon class="icon-styling">person</mat-icon>
+      <div class="fw-bold">{{user().username}}'s Profile</div>
+    </div>
+
+    <hr class="my-3 line-styling" />
+
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <span class="fw-semibold">Locations</span>
+      <div class="d-flex gap-2">
+        <button mat-icon-button (click)="prevLocation()" [disabled]="currentIndex() === 0">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-icon-button (click)="nextLocation()" [disabled]="currentIndex() === locations.length - 1">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="location-card p-3 rounded-3 border-1">
+      <div class="fw-bold mb-1">{{ currentLocation().name }}</div>
+      <div class="text-muted small">
+        <span>Lat: {{ currentLocation().latitude }}</span>
+        <span class="mx-2">|</span>
+        <span>Lng: {{ currentLocation().longitude }}</span>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center gap-1 mt-2">
+      @for (loc of locations; track loc; let i = $index) {
+        <span class="dot" [class.active]="i === currentIndex()" (click)="currentIndex.set(i)"></span>
+      }
+    </div>
+  </div>
+
+  <mat-accordion>
+    <mat-expansion-panel style="background: var(--accent-color)">
+
+      <mat-expansion-panel-header>
+        <mat-panel-title>Edit Profile</mat-panel-title>
+        <mat-panel-description>Update your username, email or password</mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <form (ngSubmit)="onSubmit()" #updateForm="ngForm" class="d-flex flex-column">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput name="username" [(ngModel)]="form.username"
+                 placeholder="Leave blank to keep current" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput name="email" type="email" [(ngModel)]="form.email"
+                 placeholder="Leave blank to keep current" />
+        </mat-form-field>
+
+        <div ngModelGroup="passwords" passwordGroupValidator #passwordGroup="ngModelGroup">
+
+          <mat-form-field appearance="outline" class="me-2">
+            <mat-label>Current Password</mat-label>
+            <input matInput name="oldPassword" type="password"
+                   [(ngModel)]="form.oldPassword"
+                   placeholder="Required to change password" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>New Password</mat-label>
+            <input matInput name="newPassword" type="password"
+                   [(ngModel)]="form.newPassword"
+                   placeholder="Leave blank to keep current" />
+          </mat-form-field>
+
+          @if (passwordGroup.errors?.['oldPasswordRequired']) {
+            <mat-error>Current password is required when setting a new password.</mat-error>
+          }
+
+        </div>
+
+        @if (successMessage()) {
+          <mat-hint class="success">{{ successMessage() }}</mat-hint>
+        }
+        @if (errorMessage()) {
+          <mat-error>{{ errorMessage() }}</mat-error>
+        }
+
+        <button type="submit" class="btn btn-agro-primary mt-2">Save Changes</button>
+
+      </form>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
