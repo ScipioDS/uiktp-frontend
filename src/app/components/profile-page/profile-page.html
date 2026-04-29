@@ -4,10 +4,18 @@
 
   <div class="card p-4 my-4 shadow d-flex flex-column border-0 rounded-4"
        style="background: var(--accent-color)">
-    <div class="d-flex align-items-center gap-3">
-      <mat-icon class="icon-styling">person</mat-icon>
-      <div class="fw-bold">{{user().username}}'s Profile</div>
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center gap-3">
+        <mat-icon class="icon-styling">person</mat-icon>
+        <div class="fw-bold">{{user().username}}'s Profile</div>
+      </div>
+
+      <!-- your button -->
+      <button type="button" class="btn btn-agro-primary mt-2" (click)="openAddLocation()">
+        Add Location
+      </button>
     </div>
+
 
     <hr class="my-3 line-styling" />
 
@@ -23,20 +31,25 @@
       </div>
     </div>
 
-    <div class="location-card p-3 rounded-3 border-1">
-      <div class="fw-bold mb-1">{{ currentLocation().name }}</div>
-      <div class="text-muted small">
-        <span>Lat: {{ currentLocation().latitude }}</span>
-        <span class="mx-2">|</span>
-        <span>Lng: {{ currentLocation().longitude }}</span>
+    @let loc = currentLocation();
+    @if (loc) {
+      <div class="location-card p-3 rounded-3 border-1">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <div class="fw-bold">{{ loc.name }}</div>
+          <button mat-icon-button color="warn" (click)="deleteLocation()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        <div class="text-muted small">
+          <span>Lat: {{ loc.latitude }}</span>
+          <span class="mx-2">|</span>
+          <span>Lng: {{ loc.longitude }}</span>
+        </div>
       </div>
-    </div>
+      ...
+    }
 
-    <div class="d-flex justify-content-center gap-1 mt-2">
-      @for (loc of locations; track loc; let i = $index) {
-        <span class="dot" [class.active]="i === currentIndex()" (click)="currentIndex.set(i)"></span>
-      }
-    </div>
+
   </div>
 
   <mat-accordion>

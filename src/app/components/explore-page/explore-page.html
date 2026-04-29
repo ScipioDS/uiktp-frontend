@@ -1,2 +1,23 @@
 <app-header></app-header>
-<p>explore-page works!</p>
+
+<div class="explore-container">
+  <h2 class="explore-title">Explore Locations</h2>
+
+  @if (locations().length === 0) {
+    <p class="text-muted">No locations found.</p>
+  }
+
+  <div class="locations-grid">
+    @for (loc of locations(); track loc.id) {
+      <div class="location-card p-3 rounded-3 border-1">
+        <div class="fw-bold mb-1">{{ loc.name }}</div>
+        <div class="text-muted small">
+          <span><mat-icon class="small-icon">place</mat-icon></span>
+          <span>Lat: {{ loc.latitude }}</span>
+          <span class="mx-2">|</span>
+          <span>Lng: {{ loc.longitude }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>

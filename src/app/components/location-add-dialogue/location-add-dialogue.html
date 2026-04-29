@@ -1,0 +1,32 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>Add Location</h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="form" class="dialog-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="e.g. Main Warehouse" />
+        <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Latitude</mat-label>
+        <input matInput type="number" formControlName="latitude" />
+        <mat-error *ngIf="form.get('latitude')?.hasError('required')">Latitude is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Longitude</mat-label>
+        <input matInput type="number" formControlName="longitude" />
+        <mat-error *ngIf="form.get('longitude')?.hasError('required')">Longitude is required</mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+      Add Location
+    </button>
+  </mat-dialog-actions>
+</div>

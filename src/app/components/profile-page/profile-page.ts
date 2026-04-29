@@ -18,6 +18,9 @@ import {
 import { PasswordGroupValidator } from '../../util/password.group.validator';
 import { LandLocation } from '../../model/location';
 import { MatIcon } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { LocationService } from '../../services/location.service';
+import { LocationAddDialogue } from '../location-add-dialogue/location-add-dialogue';
 
 @Component({
   selector: 'app-profile-page',
@@ -44,17 +47,52 @@ export class ProfilePage implements OnInit {
   private authService = inject(AuthService);
   private userService = inject(UserService);
 
-  locations: LandLocation[] = [
-    new LandLocation('Central Park', 40.785091, -73.968285),
-    new LandLocation('Eiffel Tower', 48.85837, 2.294481),
-    new LandLocation('Colosseum', 41.890251, 12.492373),
-    new LandLocation('Machu Picchu', -13.163141, -72.544963),
-  ];
+  locations = signal<LandLocation[]>([]);
 
   currentIndex = signal(0);
 
+  constructor(private dialog: MatDialog, private locationService: LocationService) {
+    this.authService.loadUser().subscribe();
+  }
+
+  openAddLocation(): void {
+    const ref = this.dialog.open(LocationAddDialogue, {
+      width: '420px',
+      data: { userId: this.user().id },  // pass real userId
+    });
+
+    ref.afterClosed().subscribe(result => {
+      if (result) {
+        this.locationService.create(result).subscribe({
+          next: (loc) => {
+            this.locations.update(prev => [...prev, new LandLocation(loc.id, loc.name, loc.latitude, loc.longitude)]);
+          },
+          error: (err) => console.error(err),
+        });
+      }
+    });
+  }
+
+  deleteLocation(): void {
+    const loc = this.currentLocation();
+    if (!loc?.id) return;
+
+    this.locationService.delete(loc.id).subscribe({
+      next: () => {
+        this.locations.update(prev => prev.filter(l => l.id !== loc.id));
+        // clamp index so it doesn't go out of bounds
+        const newLen = this.locations().length;
+        if (this.currentIndex() >= newLen) {
+          this.currentIndex.set(Math.max(0, newLen - 1));
+        }
+      },
+      error: (err) => console.error('Failed to delete location', err),
+    });
+  }
+
   currentLocation() {
-    return this.locations[this.currentIndex()];
+    const locs = this.locations();
+    return locs.length > 0 ? locs[this.currentIndex()] : null;
   }
 
   prevLocation() {
@@ -62,7 +100,7 @@ export class ProfilePage implements OnInit {
   }
 
   nextLocation() {
-    if (this.currentIndex() < this.locations.length - 1) this.currentIndex.update((i) => i + 1);
+    if (this.currentIndex() < this.locations().length - 1) this.currentIndex.update((i) => i + 1);
   }
 
   id: string | null | undefined;
@@ -78,17 +116,20 @@ export class ProfilePage implements OnInit {
   successMessage = signal('');
   errorMessage = signal('');
 
-  constructor() {
-    this.authService.loadUser().subscribe();
-  }
-
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
+
     this.userService.getUserInfo().subscribe((user) => {
-      console.log(user);
-      // pre-fill form if you want:
-      // this.form.username = user.username;
-      // this.form.email = user.email;
+      // load locations once we have the user
+      const userId = this.user()?.id;
+      if (userId) {
+        this.locationService.getByUserId(userId).subscribe({
+          next: (locs) => {
+            this.locations.set(locs.map(l => new LandLocation(l.id, l.name, l.latitude, l.longitude)));
+          },
+          error: (err) => console.error('Failed to load locations', err),
+        });
+      }
     });
   }
 

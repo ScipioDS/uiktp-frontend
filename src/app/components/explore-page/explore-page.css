@@ -1,0 +1,31 @@
+.explore-container {
+  padding: 2rem;
+}
+
+.explore-title {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.location-card {
+  background: #fff;
+  border: 1px solid #dee2e6 !important;
+  transition: box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.location-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.small-icon {
+  font-size: 14px;
+  vertical-align: middle;
+  margin-right: 2px;
+}
