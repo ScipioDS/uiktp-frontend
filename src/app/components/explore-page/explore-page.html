@@ -9,8 +9,14 @@
 
   <div class="locations-grid">
     @for (loc of locations(); track loc.id) {
+      <!-- explore.component.html — updated card -->
       <div class="location-card p-3 rounded-3 border-1">
-        <div class="fw-bold mb-1">{{ loc.name }}</div>
+        <div class="d-flex justify-content-between align-items-start">
+          <div class="fw-bold mb-1">{{ loc.name }}</div>
+          <button mat-icon-button color="primary" (click)="openWeather(loc)" title="View weather data">
+            <mat-icon>cloud</mat-icon>
+          </button>
+        </div>
         <div class="text-muted small">
           <span><mat-icon class="small-icon">place</mat-icon></span>
           <span>Lat: {{ loc.latitude }}</span>

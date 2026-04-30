@@ -1,0 +1,55 @@
+<div class="weather-dialog">
+  <div class="dialog-header">
+    <div class="header-left">
+      <mat-icon class="header-icon">thermostat</mat-icon>
+      <div>
+        <h2 class="dialog-title">Weather Data</h2>
+        <p class="dialog-subtitle">{{ data.locationName }}</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button mat-icon-button (click)="refresh()" [disabled]="loading()" title="Refresh from API">
+        <mat-icon [class.spinning]="loading()">refresh</mat-icon>
+      </button>
+      <button mat-icon-button (click)="dialogRef.close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading weather data...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error-state">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ error() }}</p>
+      <button mat-stroked-button (click)="loadData()">Retry</button>
+    </div>
+  } @else {
+    <mat-tab-group animationDuration="200ms">
+      <mat-tab label="Temperature">
+        <div class="chart-container">
+          <canvas baseChart [data]="tempChartData" [options]="lineChartOptions" type="line"></canvas>
+        </div>
+      </mat-tab>
+      <mat-tab label="Soil Temp">
+        <div class="chart-container">
+          <canvas baseChart [data]="soilTempChartData" [options]="lineChartOptions" type="line"></canvas>
+        </div>
+      </mat-tab>
+      <mat-tab label="Moisture">
+        <div class="chart-container">
+          <canvas baseChart [data]="moistureChartData" [options]="lineChartOptions" type="line"></canvas>
+        </div>
+      </mat-tab>
+      <mat-tab label="Wind & Rain">
+        <div class="chart-container">
+          <canvas baseChart [data]="windRainChartData" [options]="barChartOptions" type="bar"></canvas>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  }
+</div>
