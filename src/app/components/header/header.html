@@ -21,6 +21,13 @@
               Logout
             </button>
           </li>
+          @if (this.authService.isAdmin()) {
+            <li>
+              <button class="dropdown-item" type="button" routerLink="/admin">
+                Admin Panel
+              </button>
+            </li>
+          }
         </ul>
       </div>
     } @else {

@@ -21,6 +21,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { LocationService } from '../../services/location.service';
 import { LocationAddDialogue } from '../location-add-dialogue/location-add-dialogue';
+import { WeatherDialog } from '../weather-dialog/weather-dialog';
 
 @Component({
   selector: 'app-profile-page',
@@ -150,6 +151,15 @@ export class ProfilePage implements OnInit {
     this.userService.updateUser(payload).subscribe({
       next: () => this.successMessage.set('Profile updated successfully.'),
       error: () => this.errorMessage.set('Update failed. Please try again.'),
+    });
+  }
+
+  openWeather(loc: LandLocation) {
+    const ref = this.dialog.open(WeatherDialog, {
+      data: { locationId: loc.id, locationName: loc.name },
+      width: '900px',
+      maxWidth: '95vw',
+      panelClass: 'weather-dialog-panel',
     });
   }
 }

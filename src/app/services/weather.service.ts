@@ -39,4 +39,17 @@ export class WeatherService {
   getRefreshed(locationId: number): Observable<FullWeatherDataDTO[]> {
     return this.http.get<FullWeatherDataDTO[]>(`${this.API}/full/${locationId}`);
   }
+
+  exportWeatherData(locationId: number): void {
+    this.http.get(`http://localhost:8080/api/export/${locationId}`, {
+      responseType: 'blob'
+    }).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `weather_data_${locationId}.xlsx`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
 }

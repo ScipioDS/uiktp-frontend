@@ -61,4 +61,16 @@ export class AuthService {
       return false;
     }
   }
+
+  isAdmin(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return Array.isArray(payload.roles) && payload.roles.includes('ROLE_ADMIN');
+    } catch {
+      return false;
+    }
+  }
 }
