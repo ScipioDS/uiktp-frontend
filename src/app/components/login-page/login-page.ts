@@ -36,7 +36,7 @@ export class LoginPage {
 
   initLoginForm() {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', Validators.required],
     });
   }

@@ -240,4 +240,8 @@ export class WeatherDialog implements OnInit {
       ],
     };
   }
+
+  export() {
+    this.weatherService.exportWeatherData(this.data.locationId);
+  }
 }

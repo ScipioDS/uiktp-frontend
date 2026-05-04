@@ -1,0 +1,80 @@
+<app-header></app-header>
+
+<div class="admin-container">
+  <section class="import-section">
+    <div class="section-header">
+      <h2>Import Locations</h2>
+      <p>Upload an Excel file to bulk-import predefined locations</p>
+    </div>
+
+    <div
+      class="drop-zone"
+      [class.drag-over]="isDragging()"
+      [class.has-file]="selectedFile()"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+      (click)="fileInput.click()"
+    >
+      <input
+        #fileInput
+        type="file"
+        accept=".xlsx,.xls"
+        hidden
+        (change)="onFileSelected($event)"
+      />
+
+      @if (!selectedFile()) {
+        <div class="drop-zone-content">
+          <div class="upload-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <p class="drop-label">Drop your Excel file here</p>
+          <p class="drop-sub">or click to browse &nbsp;·&nbsp; .xlsx, .xls</p>
+        </div>
+      } @else {
+        <div class="file-preview">
+          <div class="file-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <div class="file-info">
+            <span class="file-name">{{ selectedFile()!.name }}</span>
+            <span class="file-size">{{ formatSize(selectedFile()!.size) }}</span>
+          </div>
+          <button class="clear-btn" (click)="clearFile($event)">✕</button>
+        </div>
+      }
+    </div>
+
+    <div class="import-actions">
+      <button
+        class="btn-import btn-agro-primary"
+        [disabled]="!selectedFile() || isImporting()"
+        (click)="importFile()"
+      >
+        @if (isImporting()) {
+          <span class="loading-text">
+            <span class="spinner"></span> Importing…
+          </span>
+        } @else {
+          <span>Import Locations</span>
+        }
+      </button>
+    </div>
+
+    @if (successMessage()) {
+      <div class="status-message success">✓ {{ successMessage() }}</div>
+    }
+
+    @if (errorMessage()) {
+      <div class="status-message error">✕ {{ errorMessage() }}</div>
+    }
+  </section>
+</div>

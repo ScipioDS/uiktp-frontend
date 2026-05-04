@@ -8,6 +8,9 @@
       </div>
     </div>
     <div class="header-actions">
+      <button mat-icon-button (click)="export()" [disabled]="loading()" title="Export to Excel">
+        <mat-icon>download</mat-icon>
+      </button>
       <button mat-icon-button (click)="refresh()" [disabled]="loading()" title="Refresh from API">
         <mat-icon [class.spinning]="loading()">refresh</mat-icon>
       </button>

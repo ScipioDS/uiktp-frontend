@@ -1,0 +1,181 @@
+.admin-container {
+  max-width: 640px;
+  margin: 2.5rem auto;
+  padding: 0 var(--base-padding);
+  font-family: var(--main-font);
+}
+
+.section-header {
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem;
+  color: var(--main-color);
+}
+
+.section-header p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Drop zone */
+.drop-zone {
+  border: 2px dashed #a8d5b5;
+  border-radius: 10px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: var(--accent-color);
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: var(--main-color);
+  background: #dff5e5;
+}
+
+.drop-zone.has-file {
+  border-style: solid;
+  border-color: var(--main-color);
+  background: #dff5e5;
+}
+
+.upload-icon svg {
+  width: 40px;
+  height: 40px;
+  color: var(--main-color);
+  margin-bottom: 0.75rem;
+}
+
+.drop-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2a2a2a;
+  margin: 0 0 0.25rem;
+}
+
+.drop-sub {
+  font-size: 0.82rem;
+  color: #888;
+  margin: 0;
+}
+
+/* File preview */
+.file-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.file-icon svg {
+  width: 32px;
+  height: 32px;
+  color: var(--main-color);
+}
+
+.file-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.file-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  word-break: break-all;
+}
+
+.file-size {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.clear-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.clear-btn:hover {
+  color: #c0392b;
+  background: #fde8e8;
+}
+
+/* Actions */
+.import-actions {
+  margin-top: 1.25rem;
+}
+
+.btn-import {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-import:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loading-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Status messages */
+.status-message {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.status-message.success {
+  background: #eafaf1;
+  color: #1e6e3e;
+  border: 1px solid #a8d5b5;
+}
+
+.status-message.error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
