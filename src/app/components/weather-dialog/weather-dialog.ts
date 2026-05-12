@@ -7,6 +7,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { FullWeatherDataDTO, WeatherService } from '../../services/weather.service';
 import { BaseChartDirective } from 'ng2-charts';
+import { IrrigationPrediction, IrrigationService } from '../../services/irrigation.service';
+import { DatePipe, DecimalPipe, KeyValuePipe } from '@angular/common';
 
 export interface WeatherDialogData {
   locationId: number;
@@ -22,6 +24,9 @@ export interface WeatherDialogData {
     MatTabsModule,
     MatProgressSpinnerModule,
     BaseChartDirective,
+    DatePipe,
+    KeyValuePipe,
+    DecimalPipe,
   ],
   templateUrl: './weather-dialog.html',
   styleUrl: './weather-dialog.css',
@@ -30,6 +35,9 @@ export class WeatherDialog implements OnInit {
   loading = signal(false);
   error = signal<string | null>(null);
   weatherService = inject(WeatherService);
+  irrigationService = inject(IrrigationService);
+  irrigation = signal<IrrigationPrediction | null>(null);
+  irrigationError = signal<string | null>(null);
 
   labels: string[] = [];
   tempChartData!: ChartData<'line'>;
@@ -64,6 +72,7 @@ export class WeatherDialog implements OnInit {
 
   ngOnInit() {
     this.loadData();
+    this.loadIrrigation();
   }
 
   loadData() {
@@ -78,6 +87,14 @@ export class WeatherDialog implements OnInit {
         this.error.set('Failed to load weather data.');
         this.loading.set(false);
       },
+    });
+  }
+
+  loadIrrigation() {
+    this.irrigationError.set(null);
+    this.irrigationService.getLatest(this.data.locationId).subscribe({
+      next: (data) => this.irrigation.set(data),
+      error: () => this.irrigationError.set('Failed to load irrigation prediction.'),
     });
   }
 

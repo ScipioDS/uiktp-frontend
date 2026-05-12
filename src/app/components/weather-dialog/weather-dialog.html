@@ -53,6 +53,59 @@
           <canvas baseChart [data]="windRainChartData" [options]="barChartOptions" type="bar"></canvas>
         </div>
       </mat-tab>
+      <mat-tab label="Irrigation">
+        <div class="irrigation-container">
+          @if (irrigationError()) {
+            <div class="error-state">
+              <mat-icon>error_outline</mat-icon>
+              <p>{{ irrigationError() }}</p>
+              <button mat-stroked-button (click)="loadIrrigation()">Retry</button>
+            </div>
+          } @else if (!irrigation()) {
+            <div class="loading-state">
+              <mat-spinner diameter="32"></mat-spinner>
+            </div>
+          } @else {
+            <div class="irrigation-card">
+              <div class="irrigation-summary p-4">
+                <div class="row">
+                  <div class="d-flex align-items-center col-3">
+                    <mat-icon class="me-2">event</mat-icon>
+                    <span>Date:</span>
+                  </div>
+                  <span class="col-4">{{ irrigation()!.date_time | date:'medium' }}</span>
+                </div>
+                <div class="row">
+                  <div class="d-flex align-items-center col-3">
+                    <mat-icon class="me-2">category</mat-icon>
+                    <span>Category:</span>
+                  </div>
+                  <span class="col-4">{{ irrigation()!.irrigation_category }}</span>
+                </div>
+                <div class="row">
+                  <div class="d-flex align-items-center col-3">
+                    <mat-icon class="me-2">water_drop</mat-icon>
+                    <span>Water Amount:</span>
+                  </div>
+                  <span class="col-4">{{ irrigation()!.water_amount_mm }} mm</span>
+                </div>
+              </div>
+
+              <div class="border-top p-4">
+                <h4 class="features-title">Model Features</h4>
+                <div class="features-grid">
+                  @for (entry of irrigation()!.features | keyvalue; track entry.key) {
+                    <div class="feature-item">
+                      <span class="feature-key">{{ entry.key }}</span>
+                      <span class="feature-val">{{ entry.value | number:'1.2-2' }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </mat-tab>
     </mat-tab-group>
   }
 </div>
